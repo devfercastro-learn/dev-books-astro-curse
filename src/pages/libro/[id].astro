@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import { SHOW_BUY_BUTTON } from "astro:env/server";
+import AmazonLogo from "../../components/AmazonLogo.astro";
 
 export async function getStaticPaths() {
   const books = await getCollection("books");
@@ -22,7 +24,22 @@ const { Content } = await render(book);
   <div class="flex gap-12">
     <aside class="flex flex-col items-center gap-4">
       <a href="/" class="hover:underline opacity-70">Volver atrás</a>
-      <img transition:name={`img-${slug}`} src={`/${img}`} alt={title} class="rounded w-96 h-auto" />
+      <img transition:name={`img-${slug}`} src={`/${img}`} alt={title} class="rounded w-72 h-auto" />
+      <span class="text-xl" id="score"></span>
+      {
+        SHOW_BUY_BUTTON && (
+          <a
+            href={buy.spain}
+            title="Comprar libro"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-balance inline-flex gap-2 items-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-black font-bold py-2 px-4 rounded-lg border border-yellow-500 transition duration-200 ease-in-out hover:scale-105 justify-center text-center"
+          >
+            Comprar en Amazon España
+            <AmazonLogo />
+          </a>
+        )
+      }
       <!-- Enlace para compra -->
     </aside>
 
@@ -34,3 +51,7 @@ const { Content } = await render(book);
     </main>
   </div>
 </Layout>
+
+<script>
+  import { SCORE_API_ENDPOINT } from "astro:env/client";
+</script>
