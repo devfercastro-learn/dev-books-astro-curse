@@ -21,11 +21,15 @@ const books = await getCollection('books');
 						return (
 							<article class="flex">
 								<a href={`/libro/${slug}`} class="mb-2 mr-5 xl:mb-0 transition hover:scale-110">
-									<img class="w-48 rounded" src={`/${img}`} alt={title} />
+									<img
+										transition:name={`img-${slug}`}
+										class="w-48 rounded"
+										src={`/${img}`}
+										alt={title} />
 								</a>
 
 								<div class="flex flex-col justify">
-									<h2 class="mb-2 text-2xl font-bold leading-tight text-white">
+									<h2 transition:name={`title-${slug}`} class="mb-2 text-2xl font-bold leading-tight text-white">
 										{title}
 									</h2>
 
